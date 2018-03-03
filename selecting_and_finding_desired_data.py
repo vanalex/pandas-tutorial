@@ -31,4 +31,14 @@ print('That showed us a summary, and then we can look at the first 10 rows:')
 print(complaints[['Complaint Type', 'Borough']][:10])
 
 print('what is the most common complaint type?')
-print(complaints['Complaint Type'].value_counts())
+complaint_type_counts = complaints['Complaint Type'].value_counts()
+print(complaint_type_counts)
+
+print('')
+print('complaints type top 10 ')
+print(complaint_type_counts[:10])
+
+# plot
+complaint_type_counts[:10].plot(kind='bar')
+plt.show()
+
