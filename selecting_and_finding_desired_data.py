@@ -1,15 +1,10 @@
-import pandas as pd
 import matplotlib.pyplot as plt
-
-# This is necessary to show lots of columns in pandas 0.12.
-# Not necessary in pandas 0.13.
-pd.set_option('display.width', 5000)
-pd.set_option('display.max_columns', 60)
-
-plt.rcParams['figure.figsize'] = (15, 5)
+import  header
+import file_paths
+import import_data as i_data
 
 # read csv
-complaints = pd.read_csv('./data/311-service-requests.csv')
+complaints = i_data.read_csv(file_paths.SERVICE_REQUESTS_FILE_PATH)
 
 # print csv
 # print(complaints) # uncomment to print
