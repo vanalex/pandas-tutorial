@@ -16,3 +16,5 @@ print(is_snowing[:5])
 is_snowing = is_snowing.astype(float)
 is_snowing.plot()
 plt.show()
+
+
