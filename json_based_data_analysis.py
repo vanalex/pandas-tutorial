@@ -1,11 +1,10 @@
-from numpy.random import randn
 import numpy as np
-import os
 import matplotlib.pyplot as plt
 import pandas as pd
 import json
-from collections import defaultdict
 from collections import Counter
+import seaborn as sns
+from scipy import stats
 
 
 np.random.seed(123)
@@ -72,3 +71,9 @@ clean_tz = frame['tz'].fillna('Missing')
 clean_tz[clean_tz == ''] = 'Unknown'
 tz_counts = clean_tz.value_counts()
 print(tz_counts[:10])
+
+plt.figure(figsize=(10, 4))
+subset = tz_counts[:10]
+sns.barplot(y=subset.index, x=subset.values)
+plt.show()
+
