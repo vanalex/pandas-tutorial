@@ -77,3 +77,57 @@ subset = tz_counts[:10]
 sns.barplot(y=subset.index, x=subset.values)
 plt.show()
 
+
+cframe = frame[frame.a.notnull()]
+cframe = cframe.copy()
+cframe['os'] = np.where(cframe['a'].str.contains('Windows'),'Windows', 'Not Windows')
+
+print('*****')
+print(cframe['os'][:5])
+
+
+by_tz_os = cframe.groupby(['tz', 'os'])
+
+
+agg_counts = by_tz_os.size().unstack().fillna(0)
+
+print('*****')
+print(agg_counts[:10])
+
+
+# Use to sort in ascending order
+indexer = agg_counts.sum(1).argsort()
+print('******')
+print(indexer[:10])
+
+
+count_subset = agg_counts.take(indexer[-10:])
+print('count subset')
+print(count_subset)
+
+agg_counts.sum(1).nlargest(10)
+
+plt.figure()
+
+# Rearrange the data for plotting
+count_subset = count_subset.stack()
+count_subset.name = 'total'
+count_subset = count_subset.reset_index()
+count_subset[:10]
+sns.barplot(x='total', y='tz', hue='os',  data=count_subset)
+
+
+def norm_total(group):
+    group['normed_total'] = group.total / group.total.sum()
+    return group
+
+
+results = count_subset.groupby('tz').apply(norm_total)
+
+plt.figure()
+
+sns.barplot(x='normed_total', y='tz', hue='os',  data=results)
+plt.show()
+g = count_subset.groupby('tz')
+results2 = count_subset.total / g.total.transform('sum')
+print(results2)
